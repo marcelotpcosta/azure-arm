@@ -68,21 +68,21 @@
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "vNet",
+      "defaultValue": "VNet",
       "metadata": {
         "description": "Name of the VNET"
       }
     },
-    "subnetName": {
+/*     "subnetName": {
       "type": "string",
       "defaultValue": "Subnet",
       "metadata": {
         "description": "Name of the subnet in the virtual network"
       }
-    },
+    }, */
     "networkSecurityGroupName": {
       "type": "string",
-      "defaultValue": "SecGroupNet",
+      "defaultValue": "NetSecGroup",
       "metadata": {
         "description": "Name of the Network Security Group"
       }
@@ -94,6 +94,7 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
     "osDiskType": "Standard_LRS",
     "subnetAddressPrefix": "10.1.0.0/24",
+    "subnetName": "Subnet",
     "addressPrefix": "10.1.0.0/16",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
@@ -152,7 +153,7 @@
               "protocol": "TCP",
               "access": "Allow",
               "direction": "Inbound",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "255.255.255.255",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "22"
@@ -174,7 +175,7 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[variables('subnetName')]",
             "properties": {
               "addressPrefix": "[variables('subnetAddressPrefix')]",
               "privateEndpointNetworkPolicies": "Enabled",
